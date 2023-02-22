@@ -1,2 +1,6 @@
 # INIT
- An R package for Idiographic Network comparison
+
+This early developmental version can be installed from within R using the devtools-package:
+
+library(devtools)
+install_github("RiaHoekstra/INIT")
