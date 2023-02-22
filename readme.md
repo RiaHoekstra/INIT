@@ -1,6 +1,6 @@
 # INIT
 
-This early developmental version can be installed in R using the devtools-package:
+To install this early developmental version in R use the devtools-pakage:
 
 ```
 library(devtools)
