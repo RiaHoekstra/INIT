@@ -1,5 +1,5 @@
 #' 
-#' Function to test homogeneity in idiograhic network models
+#' Function to test homogeneity in idiographic network models
 #'
 #' @param data dataset 
 #' @param vars string indicating the variables included in the model 
