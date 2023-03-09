@@ -85,20 +85,24 @@ data <- rbind(data1, data2)
 # Compare networks using INIT
 # ------------------------------------------------------------------------------
 
-# Networks can be compared on (1) overall homogeneity, (2) temporal network 
-# homogeneity, (3) contemporal network homogeneity for (1) saturated networks or 
+# Idiographic networks can be compared on (1) overall homogeneity, (2) contemporal network 
+# homogeneity, (3) temporal network homogeneity for (1) saturated networks or 
 # (2) pruned networks. 
 # Below all options are illustrated. 
 
-INIT(data = data, idvar = "id", estimator = "FIML", network = "saturated")
+INIT(data = data, 
+     idvar = "id", 
+     estimator = "FIML", 
+     network = "saturated")
 
 
 data = data
 idvar = "id"
-
+estimator = "FIML"
+vars = colnames(data)[1:6]
+networkType = "pruned"
 
 
 # To do: 
 # if model is already estimated? 
-# add between subject effects? 
 

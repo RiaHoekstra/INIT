@@ -7,7 +7,7 @@
 #' @param dayvar string indicating the day
 #' @param idvar string indicating the subject id variable name
 #' @param estimator type of estimator, i.e., "ML" or "FIML". By default set to ML
-#' @param test type of homogeneity test, i.e., "homogeneity", "homogeneity_contemp", "homogeneity_temp". By default set to homogeneity
+#' @param test type of homogeneity test, i.e., "homogeneity", "homogeneity_contemporaneous", "homogeneity_temporal". By default set to homogeneity
 #' @param networkType type of network, i.e., saturated or pruned network model. By default set to saturated
 #' @param saveModels if TRUE, all models will be saved. By default set to FALSE to save memory
 #' @param progressBar if TRUE progress bar is included 
@@ -20,42 +20,58 @@
 INIT <- function(
   data, 
   vars,  
-  beepvar = NULL,   
-  dayvar = NULL, 
+  beepvar,   
+  dayvar, 
   idvar, 
-  estimator = "ML",
-  test = "homogeneity", # different test options 
-  networkType = "saturated", # type of network estimated 
+  estimator = c("ML", "FIML"),
+  test = c("homogeneity", "homgenienty_contemporaneous", "homogeneity_temporal"), # different test options 
+  network_type = c("saturated", "pruned"), # type of network estimated 
   saveModels = FALSE,
   progressbar = TRUE
   ){
 
+  browser()
   # ------ To do add more input Checks -----
   
-  # check modelType string
-  if (!(networkType %in% c("pruned", "saturated"))) {
-    stop("networkType invalid; needs to be 'pruned' or 'saturated'")
+  # # check data frame
+  # if (!(network_type %in% c("pruned", "saturated"))) {
+  #   stop("networkType invalid; needs to be 'pruned' or 'saturated'")
+  # }
+  
+  # check arguments
+  
+  if(missing(estimator)){
+    
   }
   
-  # check estimator string
-  if (!(estimator %in% c("ML", "FIML"))) {
-    stop("estimator is invalid; needs to be 'ML' or 'FIML'")
+  # Check if data is a data frame:
+  if (!(is.data.frame(data) || is.matrix(data))){
+    stop("'data' argument must be a data frame")
   }
   
+  # If matrix coerce to data frame:
+  if (is.matrix(data)){
+    data <- as.data.frame(data)
+  }
+  
+  estimator <- match.arg(estimator) 
+  test <- match.arg(test)
+  network_type <- match.arg(network_type)
   
   # ------ Collect basic info -----
   id <- data[,idvar]
-  id <- as.numeric(as.factor(idvar)) # get ID's
-  n_person <- length(unique(idvar)) # number of individuals
+  id <- as.numeric(as.factor(id)) # get ID's
+  n_person <- length(unique(id)) # number of individuals
   n_vars <- length(vars) # number of variables
   
   
   # Progress bar
-  if(progressbar == TRUE) pb <- txtProgressBar(min = 0, max=it, initial = 0, char="-", style = 3)
+  # if(progressbar == TRUE) pb <- txtProgressBar(min = 0, max=it, initial = 0, char="-", style = 3)
   # if (progressbar==TRUE) pb <- txtProgressBar(max=it, style = 3)
   
 
   # to do add  dayvar & beepvar
+  # to do add save model
   
   # ------ Specify network model -----
   
@@ -63,19 +79,19 @@ INIT <- function(
     
     mod <- psychonetrics::gvar(data, 
                                vars = vars,
-                               #beepvar = beepvar,
-                               #dayvar = dayvar,
+                               beepvar = beepvar,
+                               dayvar = dayvar,
                                groups = idvar, 
                                estimator = "FIML") 
   } else {
     
     mod <- psychonetrics::gvar(data, 
                                vars = vars,
-                               #beepvar = beepvar,
-                               #dayvar = dayvar,
+                               beepvar = beepvar,
+                               dayvar = dayvar,
                                groups = idvar, 
                                estimator = "ML")
-  } # end if: estimator is specified
+  } # end: estimator
 
   
   # ------ Estimate network model -----
@@ -202,12 +218,16 @@ INIT <- function(
     
   } # End: networkType 
     
+  # ------ Output list -----
   
-  return(list(homogeneity = homogeneity, 
-              homogeneity_contemp = homogeneity_contemp,
-              homogeneity_union = homogeneity_union,
-              homogeneity_union_contemp = homogeneity_union_contemp)
-         )
+  output <- list("Equal" = mod_AIC,  # or BIC
+                 "Constrained" = mod_constrained_AIC, # or BIC
+                 "Delta" = delta_AIC, # or BIC
+                # "Models" = list("Model_unconstrained" = ,
+                #                 "Model_constrained" = 
+                 )
+    
+  return(output)
   
 }
 
