@@ -1,5 +1,5 @@
 #' 
-#' Function to test homogeneity in idiographic network models
+#' Function to test for homogeneity between idiographic network models
 #'
 #' @param data dataset 
 #' @param vars string indicating the variables included in the model 
@@ -24,46 +24,50 @@ INIT <- function(
   dayvar, 
   idvar, 
   estimator = c("ML", "FIML"),
-  test = c("homogeneity", "homgenienty_contemporaneous", "homogeneity_temporal"), # different test options 
+  homogeneity_test = c("overall", "contemporaneous", "temporal"), # different test options 
   network_type = c("saturated", "pruned"), # type of network estimated 
   saveModels = FALSE,
   progressbar = TRUE
   ){
-
-  browser()
-  # ------ To do add more input Checks -----
   
-  # # check data frame
-  # if (!(network_type %in% c("pruned", "saturated"))) {
-  #   stop("networkType invalid; needs to be 'pruned' or 'saturated'")
-  # }
+  # ------ Input Checks -----
   
-  # check arguments
-  
-  if(missing(estimator)){
-    
-  }
-  
-  # Check if data is a data frame:
+  # Check if data is a data frame
   if (!(is.data.frame(data) || is.matrix(data))){
     stop("'data' argument must be a data frame")
   }
   
-  # If matrix coerce to data frame:
+  # If data is a matrix coerce to data frame
   if (is.matrix(data)){
     data <- as.data.frame(data)
   }
   
-  estimator <- match.arg(estimator) 
-  test <- match.arg(test)
-  network_type <- match.arg(network_type)
+  # Check argument input
+  if (!(estimator %in% c("ML", "FIML"))) {
+    stop("estimator invalid; needs to be 'ML' or 'FIML'")
+  }
+  
+  if (!(homogeneity_test %in% c("overall", "contemporaneous", "temporal"))) {
+    stop("homogeneity_test invalid; needs to be 'overall', 'contemporaneous', 'temporal'")
+    }
+
+  if (!(network_type %in% c("pruned", "saturated"))) {
+    stop("network_type invalid; needs to be 'pruned' or 'saturated'")
+    }
+  
+  # if(missing(estimator)){
+  #   
+  # }
+
+  # estimator <- match.arg(estimator) 
+  # test <- match.arg(test)
+  # network_type <- match.arg(network_type)
   
   # ------ Collect basic info -----
   id <- data[,idvar]
   id <- as.numeric(as.factor(id)) # get ID's
   n_person <- length(unique(id)) # number of individuals
   n_vars <- length(vars) # number of variables
-  
   
   # Progress bar
   # if(progressbar == TRUE) pb <- txtProgressBar(min = 0, max=it, initial = 0, char="-", style = 3)
