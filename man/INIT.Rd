@@ -2,42 +2,45 @@
 % Please edit documentation in R/INIT.R
 \name{INIT}
 \alias{INIT}
-\title{Function to test homogeneity in idiograhic network models}
+\title{Function to test for homogeneity between idiographic network models}
 \usage{
 INIT(
   data,
   vars,
-  beepvar = NULL,
-  dayvar = NULL,
+  dayvar,
+  beepvar,
   idvar,
   estimator = "ML",
-  test = "homogeneity",
-  networkType = "saturated",
-  saveModels = FALSE,
-  progressbar = TRUE
+  network_type = "saturated",
+  homogeneity_test = "overall",
+  save_models = FALSE
 )
 }
 \arguments{
-\item{data}{dataset}
+\item{data}{Data set.}
 
-\item{vars}{string indicating the variables included in the model}
+\item{vars}{String indicating the variables included in the model.}
 
-\item{beepvar}{string indicating the beep}
+\item{dayvar}{String indicating the day.}
 
-\item{dayvar}{string indicating the day}
+\item{beepvar}{String indicating the beep.}
 
-\item{idvar}{string indicating the subject id variable name}
+\item{idvar}{String indicating the subject id variable name.}
 
-\item{estimator}{type of estimator, i.e., "ML" or "FIML". By default set to ML}
+\item{estimator}{The estimator to be used. "ML" for maximum likelihood estimation 
+or "FIML", for full-information maximum likelihood estimation. By default set to ML}
 
-\item{test}{type of homogeneity test, i.e., "homogeneity", "homogeneity_contemp", "homogeneity_temp". By default set to homogeneity}
+\item{network_type}{Type of network to estimate. Currently implemented are "saturated" or "pruned". 
+By default set to "saturated". When "pruned" is specified, non significant edges are pruned from the model with an alpha rate of 0.05.}
 
-\item{networkType}{type of network, i.e., saturated or pruned network model. By default set to saturated}
+\item{homogeneity_test}{Type of homogeneity test. "homogeneity_overall", refers to 
+test both contemporaneous and temporal network structures for homogeneity, 
+"homogeneity_contemporaneous" to test contemporaneous network structures for homogeneity, 
+"homogeneity_temporal" to test temporal network structures for homogeneity.
+By default set to "homogeneity_overall".}
 
-\item{saveModels}{if TRUE, all models will be saved. By default set to FALSE to save memory}
-
-\item{progressBar}{if TRUE progress bar is included}
+\item{save_models}{If TRUE, all models will be saved. By default set to FALSE to save memory.}
 }
 \description{
-Function to test homogeneity in idiograhic network models
+Function to test for homogeneity between idiographic network models
 }
