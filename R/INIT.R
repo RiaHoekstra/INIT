@@ -20,11 +20,6 @@
 #' @importFrom dplyr %>%
 #' @importFrom psychonetrics runmodel
 #' 
-#' @return
-#' @export
-#'
-#' @examples
-#' 
 INIT <- function(
   data, 
   vars,  
@@ -72,7 +67,10 @@ INIT <- function(
   if (missing(beepvar)){
     
     beepvar <- "beep"
-    data[[beepvar]] <- 1
+    data[[beepvar]] <- ave(seq_len(nrow(data)), 
+                           data[[idvar]], 
+                           data[[dayvar]], 
+                           FUN = seq_along)
     
   } else if (!is.character(beepvar) || length(beepvar) != 1 || !beepvar %in% names(data)){
     
