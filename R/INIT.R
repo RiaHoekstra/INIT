@@ -15,7 +15,11 @@
 #' "homogeneity_contemporaneous" to test contemporaneous network structures for homogeneity, 
 #' "homogeneity_temporal" to test temporal network structures for homogeneity.
 #' By default set to "homogeneity_overall".
-#' @param save_models If TRUE, all models will be saved. By default set to FALSE to save memory.
+#' @param save_models If TRUE, model output for contemporaneous and temporal network models will be saved and returned as output. 
+#' By default set to FALSE to save memory.
+#' 
+#' @return
+#' @export
 #' 
 #' @importFrom dplyr %>%
 #' @importFrom psychonetrics runmodel
@@ -260,6 +264,44 @@ INIT <- function(
                   equal_BIC = mod_constrained_BIC, 
                   delta_BIC = delta_BIC)
       
+      # Save model: 
+      if(save_models == TRUE){
+        
+        if(delta_BIC > 0){
+          
+          # get matrix from psychonetrics:
+          mod_contemp <- mod %>% 
+            psychonetrics::getmatrix("omega_zeta")
+          mod_temp <- mod %>% 
+            psychonetrics::getmatrix("beta")
+          
+          # Change names to correspond to idvar:
+          names(mod_contemp) <- unique(data[[idvar]])
+          names(mod_temp) <- unique(data[[idvar]])
+          
+          res[["model"]] <- list(
+            contemporaneous = mod_contemp,
+            temporal = mod_temp)
+          
+        } else #if delta_BIC < 0
+          
+          # get matrix from psychonetrics:
+          mod_constrained_contemp <- mod_constrained %>% 
+            psychonetrics::getmatrix("omega_zeta")
+        
+          mod_constrained_temp <- mod_constrained %>% 
+            psychonetrics::getmatrix("beta")
+          
+          # Change names to correspond to idvar:
+          names(mod_constrained_contemp) <- unique(data[[idvar]])
+          names(mod_constrained_temp) <- unique(data[[idvar]])
+          
+          res[["model"]] <- list(
+            contemporaneous = mod_constrained_contemp,
+            temporal = mod_constrained_temp)
+          
+      } # End: save_model
+      
     } else if(homogeneity_test == "homogeneity_contemp"){
       
       # Constrain contemporaneous union model: 
@@ -305,17 +347,15 @@ INIT <- function(
     } # End: homogeneity_test 
     
   } # End: network_type 
-    
   
-  # ------ Output -----
-  
+  # ------ Output -----  
+
   # Add input to results:
   res[['input']] <- list(
     vars = vars, 
     estimator = estimator,
     network_type = network_type,
-    homogeneity_test = homogeneity_test
-  )
+    homogeneity_test = homogeneity_test)
   
   return(res)
   

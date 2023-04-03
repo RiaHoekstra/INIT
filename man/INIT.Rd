@@ -27,15 +27,15 @@ INIT(
 
 \item{idvar}{String indicating the subject id variable name.}
 
-\item{estimator}{The estimator to be used. "ML" for maximum likelihood estimation 
+\item{estimator}{The estimator to be used. "ML" for maximum likelihood estimation
 or "FIML", for full-information maximum likelihood estimation. By default set to ML}
 
-\item{network_type}{Type of network to estimate. Currently implemented are "saturated" or "pruned". 
+\item{network_type}{Type of network to estimate. Currently implemented are "saturated" or "pruned".
 By default set to "saturated". When "pruned" is specified, non significant edges are pruned from the model with an alpha rate of 0.05.}
 
-\item{homogeneity_test}{Type of homogeneity test. "homogeneity_overall", refers to 
-test both contemporaneous and temporal network structures for homogeneity, 
-"homogeneity_contemporaneous" to test contemporaneous network structures for homogeneity, 
+\item{homogeneity_test}{Type of homogeneity test. "homogeneity_overall", refers to
+test both contemporaneous and temporal network structures for homogeneity,
+"homogeneity_contemporaneous" to test contemporaneous network structures for homogeneity,
 "homogeneity_temporal" to test temporal network structures for homogeneity.
 By default set to "homogeneity_overall".}
 
