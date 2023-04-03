@@ -22,10 +22,10 @@
 #' 
 INIT <- function(
   data, 
-  vars,
-  idvar,
+  vars,  
   dayvar, 
   beepvar,
+  idvar, 
   estimator = "ML",
   network_type = "saturated",
   homogeneity_test = "overall",
