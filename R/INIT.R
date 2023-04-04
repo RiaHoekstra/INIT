@@ -177,15 +177,57 @@ INIT <- function(
       fit_indicies <- psychonetrics::compare(different = mod, 
                                              equal = mod_constrained)
       
-      # AIC
-      mod_AIC <- fit_indicies$AIC[1]
-      mod_constrained_AIC <- fit_indicies$AIC[2]
-      delta_AIC <- fit_indicies$AIC[1] - fit_indicies$AIC[2]
-     
-      # Results 
-      res <- list(different_AIC = mod_AIC, 
-                  equal_AIC = mod_constrained_AIC, 
+      # AIC:
+      mod_AIC <- fit_indicies %>% 
+        filter(model == "different")
+      
+      mod_constrained_AIC <- fit_indicies %>% 
+        filter(model == "equal")
+      
+      delta_AIC <- mod_AIC$AIC - mod_constrained_AIC$AIC
+      
+      # Results:
+      res <- list(different_AIC = mod_AIC$AIC, 
+                  equal_AIC = mod_constrained_AIC$AIC, 
                   delta_AIC = delta_AIC)
+      
+      # Save model: 
+      if(save_models == TRUE){
+        
+        if(mod_AIC$AIC < mod_constrained_AIC$AIC){
+          
+          # get matrix from psychonetrics:
+          mod_contemp <- mod %>% 
+            psychonetrics::getmatrix("omega_zeta")
+          mod_temp <- mod %>% 
+            psychonetrics::getmatrix("beta")
+          
+          # Change names to correspond to idvar:
+          names(mod_contemp) <- unique(data[[idvar]])
+          names(mod_temp) <- unique(data[[idvar]])
+          
+          res[["model"]] <- list(
+            contemporaneous = mod_contemp,
+            temporal = mod_temp)
+          
+        } else # if mod_AIC$AIC > mod_constrained_AIC$AIC
+          
+          # get matrix from psychonetrics:
+          mod_constrained_contemp <- mod_constrained %>% 
+            psychonetrics::getmatrix("omega_zeta")
+        
+        mod_constrained_temp <- mod_constrained %>% 
+          psychonetrics::getmatrix("beta")
+        
+        # Change names to correspond to idvar:
+        names(mod_constrained_contemp) <- unique(data[[idvar]])
+        names(mod_constrained_temp) <- unique(data[[idvar]])
+        
+        res[["model"]] <- list(
+          contemporaneous = mod_constrained_contemp,
+          temporal = mod_constrained_temp)
+        
+      } # End: save_model
       
     } else if(homogeneity_test == "homogeneity_contemp") {
       
@@ -198,15 +240,57 @@ INIT <- function(
       fit_indicies <- psychonetrics::compare(different = mod, 
                                              equal = mod_constrained)
       
-      # AIC
-      mod_AIC <- fit_indicies$AIC[1]
-      mod_constrained_AIC <- fit_indicies$AIC[2]
-      delta_AIC <- fit_indicies$AIC[1] - fit_indicies$AIC[2]
+      # AIC:
+      mod_AIC <- fit_indicies %>% 
+        filter(model == "different")
       
-      # Results 
-      res <- list(different_AIC = mod_AIC, 
-                  equal_AIC = mod_constrained_AIC, 
+      mod_constrained_AIC <- fit_indicies %>% 
+        filter(model == "equal")
+      
+      delta_AIC <- mod_AIC$AIC - mod_constrained_AIC$AIC
+      
+      # Results:
+      res <- list(different_AIC = mod_AIC$AIC, 
+                  equal_AIC = mod_constrained_AIC$AIC, 
                   delta_AIC = delta_AIC)
+      
+      # Save model: 
+      if(save_models == TRUE){
+        
+        if(mod_AIC$AIC < mod_constrained_AIC$AIC){
+          
+          # get matrix from psychonetrics:
+          mod_contemp <- mod %>% 
+            psychonetrics::getmatrix("omega_zeta")
+          mod_temp <- mod %>% 
+            psychonetrics::getmatrix("beta")
+          
+          # Change names to correspond to idvar:
+          names(mod_contemp) <- unique(data[[idvar]])
+          names(mod_temp) <- unique(data[[idvar]])
+          
+          res[["model"]] <- list(
+            contemporaneous = mod_contemp,
+            temporal = mod_temp)
+          
+        } else # if mod_AIC$AIC > mod_constrained_AIC$AIC
+          
+          # get matrix from psychonetrics:
+          mod_constrained_contemp <- mod_constrained %>% 
+            psychonetrics::getmatrix("omega_zeta")
+        
+        mod_constrained_temp <- mod_constrained %>% 
+          psychonetrics::getmatrix("beta")
+        
+        # Change names to correspond to idvar:
+        names(mod_constrained_contemp) <- unique(data[[idvar]])
+        names(mod_constrained_temp) <- unique(data[[idvar]])
+        
+        res[["model"]] <- list(
+          contemporaneous = mod_constrained_contemp,
+          temporal = mod_constrained_temp)
+        
+      } # End: save_model
       
     } else { # if homogeneity_test == "homogeneity_temp"
       
@@ -219,15 +303,57 @@ INIT <- function(
       fit_indicies <- psychonetrics::compare(different = mod, 
                                              equal = mod_constrained)
       
-      # AIC
-      mod_AIC <- fit_indicies$AIC[1]
-      mod_constrained_AIC <- fit_indicies$AIC[2]
-      delta_AIC <- fit_indicies$AIC[1] - fit_indicies$AIC[2]
+      # AIC:
+      mod_AIC <- fit_indicies %>% 
+        filter(model == "different")
       
-      # Results 
-      res <- list(different_AIC = mod_AIC, 
-                  equal_AIC = mod_constrained_AIC, 
+      mod_constrained_AIC <- fit_indicies %>% 
+        filter(model == "equal")
+      
+      delta_AIC <- mod_AIC$AIC - mod_constrained_AIC$AIC
+      
+      # Results:
+      res <- list(different_AIC = mod_AIC$AIC, 
+                  equal_AIC = mod_constrained_AIC$AIC, 
                   delta_AIC = delta_AIC)
+      
+      # Save model: 
+      if(save_models == TRUE){
+        
+        if(mod_AIC$AIC < mod_constrained_AIC$AIC){
+          
+          # get matrix from psychonetrics:
+          mod_contemp <- mod %>% 
+            psychonetrics::getmatrix("omega_zeta")
+          mod_temp <- mod %>% 
+            psychonetrics::getmatrix("beta")
+          
+          # Change names to correspond to idvar:
+          names(mod_contemp) <- unique(data[[idvar]])
+          names(mod_temp) <- unique(data[[idvar]])
+          
+          res[["model"]] <- list(
+            contemporaneous = mod_contemp,
+            temporal = mod_temp)
+          
+        } else # if mod_AIC$AIC > mod_constrained_AIC$AIC
+          
+          # get matrix from psychonetrics:
+          mod_constrained_contemp <- mod_constrained %>% 
+            psychonetrics::getmatrix("omega_zeta")
+        
+         mod_constrained_temp <- mod_constrained %>% 
+           psychonetrics::getmatrix("beta")
+        
+         # Change names to correspond to idvar:
+         names(mod_constrained_contemp) <- unique(data[[idvar]])
+         names(mod_constrained_temp) <- unique(data[[idvar]])
+        
+         res[["model"]] <- list(
+           contemporaneous = mod_constrained_contemp,
+           temporal = mod_constrained_temp)
+        
+      } # End: save_model
       
     } # End: homogeneity_test
     
@@ -251,23 +377,27 @@ INIT <- function(
         runmodel()
       
       # Get fit indices: 
-      fit_indicies <- psychonetrics::compare(different = mod_union, 
+      fit_indicies <- psychonetrics::compare(different = mod_pruned, 
                                              equal = mod_constrained)
       
       # BIC
-      mod_BIC <- fit_indicies$BIC[1]
-      mod_constrained_BIC <- fit_indicies$BIC[2]
-      delta_BIC <- fit_indicies$BIC[1] - fit_indicies$BIC[2]
+      mod_BIC <- fit_indicies %>% 
+        filter(model == "different")
+    
+      mod_constrained_BIC <- fit_indicies %>% 
+        filter(model == "equal")
       
-      # Results 
-      res <- list(different_BIC = mod_BIC, 
-                  equal_BIC = mod_constrained_BIC, 
+      delta_BIC <- mod_BIC$BIC - mod_constrained_BIC$BIC
+      
+      # Results
+      res <- list(different_BIC = mod_BIC$BIC, 
+                  equal_BIC = mod_constrained_BIC$BIC, 
                   delta_BIC = delta_BIC)
       
       # Save model: 
       if(save_models == TRUE){
         
-        if(delta_BIC > 0){
+        if(mod_BIC$BIC < mod_constrained_BIC$BIC){
           
           # get matrix from psychonetrics:
           mod_contemp <- mod %>% 
@@ -283,7 +413,7 @@ INIT <- function(
             contemporaneous = mod_contemp,
             temporal = mod_temp)
           
-        } else #if delta_BIC < 0
+        } else # if mod_BIC$BIC > mod_constrained_BIC$BIC
           
           # get matrix from psychonetrics:
           mod_constrained_contemp <- mod_constrained %>% 
@@ -310,18 +440,60 @@ INIT <- function(
         runmodel()
       
       # Get fit indices: 
-      fit_indicies <- psychonetrics::compare(different = mod_union, 
+      fit_indicies <- psychonetrics::compare(different = mod_pruned, 
                                              equal = mod_constrained)
+    
+      # BIC:
+      mod_BIC <- fit_indicies %>% 
+        filter(model == "different")
       
-      # BIC
-      mod_BIC <- fit_indicies$BIC[1]
-      mod_constrained_BIC <- fit_indicies$BIC[2]
-      delta_BIC <- fit_indicies$BIC[1] - fit_indicies$BIC[2]
+      mod_constrained_BIC <- fit_indicies %>% 
+        filter(model == "equal")
       
-      # Results 
-      res <- list(different_BIC = mod_BIC, 
-                  equal_BIC = mod_constrained_BIC, 
+      delta_BIC <- mod_BIC$BIC - mod_constrained_BIC$BIC
+      
+      # Results:
+      res <- list(different_BIC = mod_BIC$BIC, 
+                  equal_BIC = mod_constrained_BIC$BIC, 
                   delta_BIC = delta_BIC)
+      
+      # Save model: 
+      if(save_models == TRUE){
+        
+        if(mod_BIC$BIC < mod_constrained_BIC$BIC){
+          
+          # get matrix from psychonetrics:
+          mod_contemp <- mod %>% 
+            psychonetrics::getmatrix("omega_zeta")
+          mod_temp <- mod %>% 
+            psychonetrics::getmatrix("beta")
+          
+          # Change names to correspond to idvar:
+          names(mod_contemp) <- unique(data[[idvar]])
+          names(mod_temp) <- unique(data[[idvar]])
+          
+          res[["model"]] <- list(
+            contemporaneous = mod_contemp,
+            temporal = mod_temp)
+          
+        } else # if mod_BIC$BIC > mod_constrained_BIC$BIC
+          
+          # get matrix from psychonetrics:
+          mod_constrained_contemp <- mod_constrained %>% 
+            psychonetrics::getmatrix("omega_zeta")
+        
+        mod_constrained_temp <- mod_constrained %>% 
+          psychonetrics::getmatrix("beta")
+        
+        # Change names to correspond to idvar:
+        names(mod_constrained_contemp) <- unique(data[[idvar]])
+        names(mod_constrained_temp) <- unique(data[[idvar]])
+        
+        res[["model"]] <- list(
+          contemporaneous = mod_constrained_contemp,
+          temporal = mod_constrained_temp)
+        
+      } # End: save_model
       
     } else { # if homogeneity_test == "homogeneity_temp"
       
@@ -331,25 +503,67 @@ INIT <- function(
         runmodel()
       
       # Get fit indices: 
-      fit_indicies <- psychonetrics::compare(different = mod_union, 
+      fit_indicies <- psychonetrics::compare(different = mod_pruned, 
                                              equal = mod_constrained)
       
-      # BIC
-      mod_BIC <- fit_indicies$BIC[1]
-      mod_constrained_BIC <- fit_indicies$BIC[2]
-      delta_BIC <- fit_indicies$BIC[1] - fit_indicies$BIC[2]
+      # BIC:
+      mod_BIC <- fit_indicies %>% 
+        filter(model == "different")
       
-      # Results 
-      res <- list(different_BIC = mod_BIC, 
-                  equal_BIC = mod_constrained_BIC, 
+      mod_constrained_BIC <- fit_indicies %>% 
+        filter(model == "equal")
+      
+      delta_BIC <- mod_BIC$BIC - mod_constrained_BIC$BIC
+      
+      # Results:
+      res <- list(different_BIC = mod_BIC$BIC, 
+                  equal_BIC = mod_constrained_BIC$BIC, 
                   delta_BIC = delta_BIC)
+      
+      # Save model: 
+      if(save_models == TRUE){
+        
+        if(mod_BIC$BIC < mod_constrained_BIC$BIC){
+          
+          # get matrix from psychonetrics:
+          mod_contemp <- mod %>% 
+            psychonetrics::getmatrix("omega_zeta")
+          mod_temp <- mod %>% 
+            psychonetrics::getmatrix("beta")
+          
+          # Change names to correspond to idvar:
+          names(mod_contemp) <- unique(data[[idvar]])
+          names(mod_temp) <- unique(data[[idvar]])
+          
+          res[["model"]] <- list(
+            contemporaneous = mod_contemp,
+            temporal = mod_temp)
+          
+        } else # if mod_BIC$BIC > mod_constrained_BIC$BIC
+          
+          # get matrix from psychonetrics:
+          mod_constrained_contemp <- mod_constrained %>% 
+            psychonetrics::getmatrix("omega_zeta")
+        
+          mod_constrained_temp <- mod_constrained %>% 
+            psychonetrics::getmatrix("beta")
+        
+          # Change names to correspond to idvar:
+          names(mod_constrained_contemp) <- unique(data[[idvar]])
+          names(mod_constrained_temp) <- unique(data[[idvar]])
+        
+          res[["model"]] <- list(
+            contemporaneous = mod_constrained_contemp,
+            temporal = mod_constrained_temp)
+        
+      } # End: save_model
       
     } # End: homogeneity_test 
     
   } # End: network_type 
   
   # ------ Output -----  
-
+  
   # Add input to results:
   res[['input']] <- list(
     vars = vars, 

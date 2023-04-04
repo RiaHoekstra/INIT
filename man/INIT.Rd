@@ -39,7 +39,8 @@ test both contemporaneous and temporal network structures for homogeneity,
 "homogeneity_temporal" to test temporal network structures for homogeneity.
 By default set to "homogeneity_overall".}
 
-\item{save_models}{If TRUE, all models will be saved. By default set to FALSE to save memory.}
+\item{save_models}{If TRUE, model output for contemporaneous and temporal network models will be saved and returned as output.
+By default set to FALSE to save memory.}
 }
 \description{
 Function to test for homogeneity between idiographic network models
