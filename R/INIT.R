@@ -187,8 +187,8 @@ INIT <- function(
       delta_AIC <- mod_AIC$AIC - mod_constrained_AIC$AIC
       
       # Results:
-      res <- list(different_AIC = mod_AIC$AIC, 
-                  equal_AIC = mod_constrained_AIC$AIC, 
+      res <- list(different_network_AIC = mod_AIC$AIC, 
+                  equal_network_AIC = mod_constrained_AIC$AIC, 
                   delta_AIC = delta_AIC)
       
       # Save model: 
@@ -250,8 +250,8 @@ INIT <- function(
       delta_AIC <- mod_AIC$AIC - mod_constrained_AIC$AIC
       
       # Results:
-      res <- list(different_AIC = mod_AIC$AIC, 
-                  equal_AIC = mod_constrained_AIC$AIC, 
+      res <- list(different_network_AIC = mod_AIC$AIC, 
+                  equal_network_AIC = mod_constrained_AIC$AIC, 
                   delta_AIC = delta_AIC)
       
       # Save model: 
@@ -313,8 +313,8 @@ INIT <- function(
       delta_AIC <- mod_AIC$AIC - mod_constrained_AIC$AIC
       
       # Results:
-      res <- list(different_AIC = mod_AIC$AIC, 
-                  equal_AIC = mod_constrained_AIC$AIC, 
+      res <- list(different_network_AIC = mod_AIC$AIC, 
+                  equal_network_AIC = mod_constrained_AIC$AIC, 
                   delta_AIC = delta_AIC)
       
       # Save model: 
@@ -390,8 +390,8 @@ INIT <- function(
       delta_BIC <- mod_BIC$BIC - mod_constrained_BIC$BIC
       
       # Results
-      res <- list(different_BIC = mod_BIC$BIC, 
-                  equal_BIC = mod_constrained_BIC$BIC, 
+      res <- list(different_network_BIC = mod_BIC$BIC, 
+                  equal_network_BIC = mod_constrained_BIC$BIC, 
                   delta_BIC = delta_BIC)
       
       # Save model: 
@@ -453,8 +453,8 @@ INIT <- function(
       delta_BIC <- mod_BIC$BIC - mod_constrained_BIC$BIC
       
       # Results:
-      res <- list(different_BIC = mod_BIC$BIC, 
-                  equal_BIC = mod_constrained_BIC$BIC, 
+      res <- list(different_network_BIC = mod_BIC$BIC, 
+                  equal_network_BIC = mod_constrained_BIC$BIC, 
                   delta_BIC = delta_BIC)
       
       # Save model: 
@@ -516,8 +516,8 @@ INIT <- function(
       delta_BIC <- mod_BIC$BIC - mod_constrained_BIC$BIC
       
       # Results:
-      res <- list(different_BIC = mod_BIC$BIC, 
-                  equal_BIC = mod_constrained_BIC$BIC, 
+      res <- list(different_network_BIC = mod_BIC$BIC, 
+                  equal_network_BIC = mod_constrained_BIC$BIC, 
                   delta_BIC = delta_BIC)
       
       # Save model: 

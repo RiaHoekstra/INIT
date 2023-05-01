@@ -14,8 +14,10 @@ remotes::install_github("RiaHoekstra/INIT")
 
 ## Comparing two individuals
 
-This example shows how to apply INIT to compare the idiographic network structure of two individuals. 
+This basic example shows how to apply INIT to compare the idiographic network structure of two individuals. To this end we will use the example dataset that is loaded with the package. This dataset contains simulated data for 6 variables, where n = 2 and t = 400. 
 
-## Comparing one individual over time 
+```
+INIT(data = data, vars = colnames(data)[1:6], idvar = colnames(data)[7], estimator = "FIML", network_type = "saturated", homogeneity_test = "homogeneity_overall")
+```
 
-This example shows how to apply INIT to compare the idiographic network structure of one individual over time.  
+`network_type` can be adjusted to estimate "saturated" or "pruned" network structures. `homogeneity_test` can be adjusted to test for homogeneity between both the temporal and contemporaneous network structures, or to test for either the homogeneity between temporal or contemporaneous network structures. 
