@@ -14,10 +14,46 @@ remotes::install_github("RiaHoekstra/INIT")
 
 ## Comparing two individuals
 
-This basic example shows how to apply INIT to compare the idiographic network structure of two individuals. To this end we will use the example dataset that is loaded with the package. This dataset contains simulated data for 6 variables, where n = 2 and t = 400. 
+This basic example shows how to apply INIT to compare the idiographic network structure of two individuals.
 
 ```
-INIT(data = data, vars = colnames(data)[1:6], idvar = colnames(data)[7], estimator = "FIML", network_type = "saturated", homogeneity_test = "homogeneity_overall")
+# Generate two homogenous VAR models:
+set.seed(42)
+
+library("graphicalVAR")
+
+# Simulate model:
+Mod <- randomGVARmodel(6,probKappaEdge = 0.8,probBetaEdge = 0.8)
+
+# Simulate dataset 1:
+Data1 <- graphicalVARsim(100,Mod$beta,Mod$kappa)
+
+# Simulate dataset 2:
+Data2 <- graphicalVARsim(100,Mod$beta,Mod$kappa)
+
+# Combine:
+Data1 <- as.data.frame(Data1)
+Data1$id <- 1
+
+Data2 <- as.data.frame(Data2)
+Data2$id <- 2
+
+vars <- paste0("V",1:4)
+
+Data <- rbind(Data1,Data2)
+
+# Run INIT:
+init_res <- INIT(
+  data = Data,
+  vars = vars,
+  idvar = "id",
+  estimator = "FIML",
+  network_type = "saturated",
+  homogeneity_test = "homogeneity_overall"
+  )
+
+# Print results:
+init_res
 ```
 
 `network_type` can be adjusted to estimate "saturated" or "pruned" network structures. `homogeneity_test` can be adjusted to test for homogeneity between both the temporal and contemporaneous network structures, or to test for either the homogeneity between temporal or contemporaneous network structures. 
