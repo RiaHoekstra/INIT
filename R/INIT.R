@@ -6,15 +6,15 @@
 #' @param beepvar String indicating the beep. 
 #' @param dayvar String indicating the day.
 #' @param idvar String indicating the subject id variable name.
-#' @param estimator The estimator to be used. "ML" for maximum likelihood estimation 
-#' or "FIML", for full-information maximum likelihood estimation. By default set to ML
+#' @param estimator Estimator to be used defaults to "ML". "FIML" for full-information maximum likelihood estimation can be used, as well as any of the estimators implemented in psychonetrics. 
 #' @param network_type Type of network to estimate. Currently implemented are "saturated" or "pruned". 
-#' By default set to "saturated". When "pruned" is specified, non significant edges are pruned from the model with an alpha rate of 0.05.
-#' @param homogeneity_test Type of homogeneity test. "homogeneity_overall", refers to 
+#' By default set to "saturated". When "pruned" is specified, non significant edges are pruned from the model. 
+#' @param alpha Alpha level under which significant edges are pruned from the network model. Default is set to 0.05.
+#' @param homogeneity_test Type of homogeneity test. "overall", refers to 
 #' test both contemporaneous and temporal network structures for homogeneity, 
-#' "homogeneity_contemporaneous" to test contemporaneous network structures for homogeneity, 
-#' "homogeneity_temporal" to test temporal network structures for homogeneity.
-#' By default set to "homogeneity_overall".
+#' "contemporaneous" to test contemporaneous network structures for homogeneity, 
+#' "temporal" to test temporal network structures for homogeneity.
+#' By default set to "overall".
 #' @param save_models If TRUE, model output for contemporaneous and temporal network models will be saved and returned as output. 
 #' By default set to FALSE to save memory.
 #' 
@@ -25,16 +25,18 @@
 #' @importFrom psychonetrics runmodel
 #' 
 INIT <- function(
-  data, 
-  vars,  
-  dayvar, 
-  beepvar,
-  idvar, 
-  estimator = "ML",
-  network_type = "saturated",
-  homogeneity_test = "overall",
-  save_models = FALSE
-  ){
+    data, 
+    vars,  
+    dayvar, 
+    beepvar,
+    idvar, 
+    estimator = "ML",
+    network_type = "saturated",
+    alpha = 0.05,
+    homogeneity_test = "overall",
+    save_models = FALSE,
+    ...
+){
   
   # ------ Set defaults -----
   
@@ -82,11 +84,6 @@ INIT <- function(
     
   } 
   
-  # Add estimator if missing:
-  if(missing(estimator)){
-    estimator <- "ML"
-  }
-  
   # Add network_type if missing:
   if(missing(network_type)){
     network_type <- "saturated"
@@ -94,7 +91,7 @@ INIT <- function(
   
   # Add homogeneity_test if missing:
   if(missing(homogeneity_test)){
-    homogeneity_test <- "homogeneity_overall"
+    homogeneity_test <- "overall"
   }
   
   # ------ Input Checks -----
@@ -120,16 +117,12 @@ INIT <- function(
   }
   
   # Check argument inputs:
-  if (!(estimator %in% c("ML", "FIML"))) {
-    stop("estimator invalid; needs to be 'ML' or 'FIML'")
-  }
-  
   if (!(network_type %in% c("saturated", "pruned"))) {
     stop("network_type invalid; needs to be 'saturated' or 'pruned'")
   }
   
-  if (!(homogeneity_test %in% c("homogeneity_overall", "homogeneity_contemporaneous", "homogeneity_temporal"))) {
-    stop("homogeneity_test invalid; needs to be 'homogeneity_overall', 'homogeneity_contemporaneous', 'homogeneity_temporal'")
+  if (!(homogeneity_test %in% c("overall", "contemporaneous", "temporal"))) {
+    stop("homogeneity_test invalid; needs to be 'overall', 'contemporaneous', 'temporal'")
   }
   
   # ------ Collect info -----
@@ -137,25 +130,13 @@ INIT <- function(
   n_vars <- length(vars) # number of variables
   
   # ------ Specify network model using psychonetrics -----
-  
-  if(estimator == "ML"){
-    
-    mod <- psychonetrics::gvar(data, 
-                               vars = vars,
-                               beepvar = beepvar,
-                               dayvar = dayvar,
-                               groups = idvar, 
-                               estimator = "ML") 
-    
-  } else { # if estimator == "FIML"
-    
-    mod <- psychonetrics::gvar(data, 
-                               vars = vars,
-                               beepvar = beepvar,
-                               dayvar = dayvar,
-                               groups = idvar, 
-                               estimator = "FIML")
-  } # end: estimator
+  mod <- psychonetrics::gvar(data, 
+                             vars = vars,
+                             beepvar = beepvar,
+                             dayvar = dayvar,
+                             groups = idvar, 
+                             estimator = estimator,
+                             ...) 
   
   # ------ Estimate network model using psychonetrics -----
   
@@ -165,7 +146,7 @@ INIT <- function(
   
   if(network_type == "saturated"){
     
-    if(homogeneity_test == "homogeneity_overall"){
+    if(homogeneity_test == "overall"){
       
       # Constrain  model: 
       mod_constrained <- mod %>% 
@@ -192,7 +173,7 @@ INIT <- function(
                   delta_AIC = delta_AIC)
       
       # Save model: 
-      if(save_models == TRUE){
+      if(save_models){
         
         if(mod_AIC$AIC < mod_constrained_AIC$AIC){
           
@@ -229,7 +210,7 @@ INIT <- function(
         
       } # End: save_model
       
-    } else if(homogeneity_test == "homogeneity_contemp") {
+    } else if(homogeneity_test == "contemporaneous") {
       
       # Constrain  model: 
       mod_constrained <- mod %>% 
@@ -255,7 +236,7 @@ INIT <- function(
                   delta_AIC = delta_AIC)
       
       # Save model: 
-      if(save_models == TRUE){
+      if(save_models){
         
         if(mod_AIC$AIC < mod_constrained_AIC$AIC){
           
@@ -292,7 +273,7 @@ INIT <- function(
         
       } # End: save_model
       
-    } else { # if homogeneity_test == "homogeneity_temp"
+    } else { # if homogeneity_test == "temporal"
       
       # Constrain  model: 
       mod_constrained <- mod %>% 
@@ -318,7 +299,7 @@ INIT <- function(
                   delta_AIC = delta_AIC)
       
       # Save model: 
-      if(save_models == TRUE){
+      if(save_models){
         
         if(mod_AIC$AIC < mod_constrained_AIC$AIC){
           
@@ -342,16 +323,16 @@ INIT <- function(
           mod_constrained_contemp <- mod_constrained %>% 
             psychonetrics::getmatrix("omega_zeta")
         
-         mod_constrained_temp <- mod_constrained %>% 
-           psychonetrics::getmatrix("beta")
+        mod_constrained_temp <- mod_constrained %>% 
+          psychonetrics::getmatrix("beta")
         
-         # Change names to correspond to idvar:
-         names(mod_constrained_contemp) <- unique(data[[idvar]])
-         names(mod_constrained_temp) <- unique(data[[idvar]])
+        # Change names to correspond to idvar:
+        names(mod_constrained_contemp) <- unique(data[[idvar]])
+        names(mod_constrained_temp) <- unique(data[[idvar]])
         
-         res[["model"]] <- list(
-           contemporaneous = mod_constrained_contemp,
-           temporal = mod_constrained_temp)
+        res[["model"]] <- list(
+          contemporaneous = mod_constrained_contemp,
+          temporal = mod_constrained_temp)
         
       } # End: save_model
       
@@ -361,20 +342,20 @@ INIT <- function(
     
     # Prune network model:
     mod_pruned <- mod %>% 
-      psychonetrics::prune(alpha = 0.05, recursive = FALSE) 
+      psychonetrics::prune(alpha = alpha, recursive = FALSE) 
     
     # Create union model: 
     mod_union <- mod_pruned %>% 
       psychonetrics::unionmodel() %>% 
       psychonetrics::runmodel()
     
-    if(homogeneity_test == "homogeneity_overall"){
+    if(homogeneity_test == "overall"){
       
       # Constrain union model: 
       mod_constrained <- mod_union %>% 
         psychonetrics::groupequal("omega_zeta") %>% 
         psychonetrics::groupequal("beta") %>% 
-        runmodel()
+        psychonetrics::runmodel()
       
       # Get fit indices: 
       fit_indicies <- psychonetrics::compare(different = mod_pruned, 
@@ -383,7 +364,7 @@ INIT <- function(
       # BIC
       mod_BIC <- fit_indicies %>% 
         filter(model == "different")
-    
+      
       mod_constrained_BIC <- fit_indicies %>% 
         filter(model == "equal")
       
@@ -395,70 +376,7 @@ INIT <- function(
                   delta_BIC = delta_BIC)
       
       # Save model: 
-      if(save_models == TRUE){
-        
-        if(mod_BIC$BIC < mod_constrained_BIC$BIC){
-          
-          # get matrix from psychonetrics:
-          mod_contemp <- mod %>% 
-            psychonetrics::getmatrix("omega_zeta")
-          mod_temp <- mod %>% 
-            psychonetrics::getmatrix("beta")
-          
-          # Change names to correspond to idvar:
-          names(mod_contemp) <- unique(data[[idvar]])
-          names(mod_temp) <- unique(data[[idvar]])
-          
-          res[["model"]] <- list(
-            contemporaneous = mod_contemp,
-            temporal = mod_temp)
-          
-        } else # if mod_BIC$BIC > mod_constrained_BIC$BIC
-          
-          # get matrix from psychonetrics:
-          mod_constrained_contemp <- mod_constrained %>% 
-            psychonetrics::getmatrix("omega_zeta")
-        
-          mod_constrained_temp <- mod_constrained %>% 
-            psychonetrics::getmatrix("beta")
-          
-          # Change names to correspond to idvar:
-          names(mod_constrained_contemp) <- unique(data[[idvar]])
-          names(mod_constrained_temp) <- unique(data[[idvar]])
-          
-          res[["model"]] <- list(
-            contemporaneous = mod_constrained_contemp,
-            temporal = mod_constrained_temp)
-          
-      } # End: save_model
-      
-    } else if(homogeneity_test == "homogeneity_contemp"){
-      
-      # Constrain contemporaneous union model: 
-      mod_constrained <- mod_union %>% 
-        psychonetrics::groupequal("omega_zeta") %>% 
-        runmodel()
-      
-      # Get fit indices: 
-      fit_indicies <- psychonetrics::compare(different = mod_pruned, 
-                                             equal = mod_constrained)
-    
-      # BIC:
-      mod_BIC <- fit_indicies %>% 
-        filter(model == "different")
-      
-      mod_constrained_BIC <- fit_indicies %>% 
-        filter(model == "equal")
-      
-      delta_BIC <- mod_BIC$BIC - mod_constrained_BIC$BIC
-      
-      # Results:
-      res <- list(different_network_BIC = mod_BIC$BIC, 
-                  equal_network_BIC = mod_constrained_BIC$BIC, 
-                  delta_BIC = delta_BIC)
-      
-      # Save model: 
-      if(save_models == TRUE){
+      if(save_models){
         
         if(mod_BIC$BIC < mod_constrained_BIC$BIC){
           
@@ -495,12 +413,12 @@ INIT <- function(
         
       } # End: save_model
       
-    } else { # if homogeneity_test == "homogeneity_temp"
+    } else if(homogeneity_test == "contemporaneous"){
       
-      # Constrain temporal union model: 
+      # Constrain contemporaneous union model: 
       mod_constrained <- mod_union %>% 
-        psychonetrics::groupequal("beta") %>% 
-        runmodel()
+        psychonetrics::groupequal("omega_zeta") %>% 
+        psychonetrics::runmodel()
       
       # Get fit indices: 
       fit_indicies <- psychonetrics::compare(different = mod_pruned, 
@@ -521,7 +439,7 @@ INIT <- function(
                   delta_BIC = delta_BIC)
       
       # Save model: 
-      if(save_models == TRUE){
+      if(save_models){
         
         if(mod_BIC$BIC < mod_constrained_BIC$BIC){
           
@@ -545,16 +463,79 @@ INIT <- function(
           mod_constrained_contemp <- mod_constrained %>% 
             psychonetrics::getmatrix("omega_zeta")
         
-          mod_constrained_temp <- mod_constrained %>% 
+        mod_constrained_temp <- mod_constrained %>% 
+          psychonetrics::getmatrix("beta")
+        
+        # Change names to correspond to idvar:
+        names(mod_constrained_contemp) <- unique(data[[idvar]])
+        names(mod_constrained_temp) <- unique(data[[idvar]])
+        
+        res[["model"]] <- list(
+          contemporaneous = mod_constrained_contemp,
+          temporal = mod_constrained_temp)
+        
+      } # End: save_model
+      
+    } else { # if homogeneity_test == "temporal"
+      
+      # Constrain temporal union model: 
+      mod_constrained <- mod_union %>% 
+        psychonetrics::groupequal("beta") %>% 
+        psychonetrics::runmodel()
+      
+      # Get fit indices: 
+      fit_indicies <- psychonetrics::compare(different = mod_pruned, 
+                                             equal = mod_constrained)
+      
+      # BIC:
+      mod_BIC <- fit_indicies %>% 
+        filter(model == "different")
+      
+      mod_constrained_BIC <- fit_indicies %>% 
+        filter(model == "equal")
+      
+      delta_BIC <- mod_BIC$BIC - mod_constrained_BIC$BIC
+      
+      # Results:
+      res <- list(different_network_BIC = mod_BIC$BIC, 
+                  equal_network_BIC = mod_constrained_BIC$BIC, 
+                  delta_BIC = delta_BIC)
+      
+      # Save model: 
+      if(save_models){
+        
+        if(mod_BIC$BIC < mod_constrained_BIC$BIC){
+          
+          # get matrix from psychonetrics:
+          mod_contemp <- mod %>% 
+            psychonetrics::getmatrix("omega_zeta")
+          mod_temp <- mod %>% 
             psychonetrics::getmatrix("beta")
-        
+          
           # Change names to correspond to idvar:
-          names(mod_constrained_contemp) <- unique(data[[idvar]])
-          names(mod_constrained_temp) <- unique(data[[idvar]])
-        
+          names(mod_contemp) <- unique(data[[idvar]])
+          names(mod_temp) <- unique(data[[idvar]])
+          
           res[["model"]] <- list(
-            contemporaneous = mod_constrained_contemp,
-            temporal = mod_constrained_temp)
+            contemporaneous = mod_contemp,
+            temporal = mod_temp)
+          
+        } else # if mod_BIC$BIC > mod_constrained_BIC$BIC
+          
+          # get matrix from psychonetrics:
+          mod_constrained_contemp <- mod_constrained %>% 
+            psychonetrics::getmatrix("omega_zeta")
+        
+        mod_constrained_temp <- mod_constrained %>% 
+          psychonetrics::getmatrix("beta")
+        
+        # Change names to correspond to idvar:
+        names(mod_constrained_contemp) <- unique(data[[idvar]])
+        names(mod_constrained_temp) <- unique(data[[idvar]])
+        
+        res[["model"]] <- list(
+          contemporaneous = mod_constrained_contemp,
+          temporal = mod_constrained_temp)
         
       } # End: save_model
       
@@ -570,6 +551,9 @@ INIT <- function(
     estimator = estimator,
     network_type = network_type,
     homogeneity_test = homogeneity_test)
+  
+  # Assign a class for S3 methods:
+  class(res) <- c("INIT","list")
   
   return(res)
   
