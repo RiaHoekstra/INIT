@@ -197,16 +197,16 @@ INIT <- function(
           mod_constrained_contemp <- mod_constrained %>% 
             psychonetrics::getmatrix("omega_zeta")
         
-        mod_constrained_temp <- mod_constrained %>% 
-          psychonetrics::getmatrix("beta")
+         mod_constrained_temp <- mod_constrained %>% 
+           psychonetrics::getmatrix("beta")
         
-        # Change names to correspond to idvar:
-        names(mod_constrained_contemp) <- unique(data[[idvar]])
-        names(mod_constrained_temp) <- unique(data[[idvar]])
+         # Change names to correspond to idvar:
+         names(mod_constrained_contemp) <- unique(data[[idvar]])
+         names(mod_constrained_temp) <- unique(data[[idvar]])
         
-        res[["model"]] <- list(
-          contemporaneous = mod_constrained_contemp,
-          temporal = mod_constrained_temp)
+         res[["model"]] <- list(
+           contemporaneous = mod_constrained_contemp,
+           temporal = mod_constrained_temp)
         
       } # End: save_model
       
@@ -260,16 +260,16 @@ INIT <- function(
           mod_constrained_contemp <- mod_constrained %>% 
             psychonetrics::getmatrix("omega_zeta")
         
-        mod_constrained_temp <- mod_constrained %>% 
+         mod_constrained_temp <- mod_constrained %>% 
           psychonetrics::getmatrix("beta")
         
-        # Change names to correspond to idvar:
-        names(mod_constrained_contemp) <- unique(data[[idvar]])
-        names(mod_constrained_temp) <- unique(data[[idvar]])
+         # Change names to correspond to idvar:
+         names(mod_constrained_contemp) <- unique(data[[idvar]])
+         names(mod_constrained_temp) <- unique(data[[idvar]])
         
-        res[["model"]] <- list(
-          contemporaneous = mod_constrained_contemp,
-          temporal = mod_constrained_temp)
+         res[["model"]] <- list(
+           contemporaneous = mod_constrained_contemp,
+           temporal = mod_constrained_temp)
         
       } # End: save_model
       
@@ -323,16 +323,16 @@ INIT <- function(
           mod_constrained_contemp <- mod_constrained %>% 
             psychonetrics::getmatrix("omega_zeta")
         
-        mod_constrained_temp <- mod_constrained %>% 
-          psychonetrics::getmatrix("beta")
+          mod_constrained_temp <- mod_constrained %>% 
+            psychonetrics::getmatrix("beta")
         
-        # Change names to correspond to idvar:
-        names(mod_constrained_contemp) <- unique(data[[idvar]])
-        names(mod_constrained_temp) <- unique(data[[idvar]])
+          # Change names to correspond to idvar:
+          names(mod_constrained_contemp) <- unique(data[[idvar]])
+          names(mod_constrained_temp) <- unique(data[[idvar]])
         
-        res[["model"]] <- list(
-          contemporaneous = mod_constrained_contemp,
-          temporal = mod_constrained_temp)
+          res[["model"]] <- list(
+            contemporaneous = mod_constrained_contemp,
+            temporal = mod_constrained_temp)
         
       } # End: save_model
       
@@ -547,13 +547,14 @@ INIT <- function(
   
   # Add input to results:
   res[['input']] <- list(
-    vars = vars, 
+    vars = n_vars, 
     estimator = estimator,
     network_type = network_type,
-    homogeneity_test = homogeneity_test)
+    homogeneity_test = homogeneity_test,
+    save_models = save_models)
   
-  # Assign a class for S3 methods:
-  class(res) <- c("INIT","list")
+  # Assign a class for output:
+  class(res) <- c("INIT", "list")
   
   return(res)
   
