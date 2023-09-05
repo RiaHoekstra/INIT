@@ -21,7 +21,9 @@
 #' @return
 #' @export
 #' 
-#' @importFrom dplyr %>%
+#' @importFrom dplyr %>% 
+#' @importFrom dplyr filter
+#' @importFrom psychonetrics compare
 #' @importFrom psychonetrics runmodel
 #' 
 INIT <- function(

@@ -3,4 +3,6 @@
 S3method(print,INIT)
 export(INIT)
 importFrom(dplyr,"%>%")
+importFrom(dplyr,filter)
+importFrom(psychonetrics,compare)
 importFrom(psychonetrics,runmodel)

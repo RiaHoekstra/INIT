@@ -1,6 +1,6 @@
 Package: INIT
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: Compare idiographic networks
+Version: 0.0.0.9
 Authors@R: 
     person("Ria H. A.", "Hoekstra", , "h.a.hoekstra@uva.nl", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-2997-0556"))
