@@ -136,7 +136,7 @@ INIT <- function(
                              dayvar = dayvar,
                              groups = idvar, 
                              estimator = estimator,
-                             ...) 
+                             ...)
   
   # ------ Estimate network model using psychonetrics -----
   

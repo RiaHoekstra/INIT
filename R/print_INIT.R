@@ -30,7 +30,7 @@ print.INIT <- function(x,...){
     
   } else {
     
-    cat(        "\n The model",ifelse(x$delta_BIC < 0,
+    cat(        "\n The model", ifelse(x$delta_BIC < 0,
                                       "without equality constraints",
                                       "with equality constraints"), 
                 "is preferred.", "\n")
@@ -38,9 +38,9 @@ print.INIT <- function(x,...){
     cat("\n")
     
     cat(" INIT summary \n",
-        "  - BIC homogeneity model:", x$equal_network_AIC,"\n",
-        "  - BIC heterogeneity model:", x$different_network_AIC,"\n",
-        "  - delta BIC:", x$different_network_BIC,"\n")
+        "  - BIC homogeneity model:", x$equal_network_BIC,"\n",
+        "  - BIC heterogeneity model:", x$different_network_BIC,"\n",
+        "  - delta BIC:", x$delta_BIC,"\n")
   }
 
   cat("\n")
