@@ -24,8 +24,8 @@ print.INIT <- function(x,...){
     cat("\n")
 
     cat(" INIT summary \n",
-        "  - AIC homogeneity model:", x$equal_network_AIC,"\n",
-        "  - AIC heterogeneity model:", x$different_network_AIC,"\n",
+        "  - AIC homogeneity model:", x$homogeneity_model_AIC,"\n",
+        "  - AIC heterogeneity model:", x$heterogeneity_model_AIC,"\n",
         "  - delta AIC:", x$delta_AIC,"\n")
     
   } else {
@@ -38,8 +38,8 @@ print.INIT <- function(x,...){
     cat("\n")
     
     cat(" INIT summary \n",
-        "  - BIC homogeneity model:", x$equal_network_BIC,"\n",
-        "  - BIC heterogeneity model:", x$different_network_BIC,"\n",
+        "  - BIC homogeneity model:", x$homogeneity_model_BIC,"\n",
+        "  - BIC heterogeneity model:", x$heterogeneity_model_BIC,"\n",
         "  - delta BIC:", x$delta_BIC,"\n")
   }
 
@@ -52,11 +52,11 @@ print.INIT <- function(x,...){
       "  - homogeneity test:",x$input$homogeneity_test,"\n")
 
   if(x$input$save_models){
-    cat(paste0("\n Estimated network models are stored in ", name,"$model"))
+    cat(paste0("\n Estimated networks are stored in ", name,"$model"))
   }
   
   # Warning?
-  # if (x$equal_network_AIC < -1e+10 |  x$different_network_AIC < -1e+10 | abs(x$delta_AIC) > 1e08){
+  # if (x$homogeneity_model_AIC < -1e+10 |  x$heterogeneity_model_AIC < -1e+10 | abs(x$delta_AIC) > 1e08){
   #   warning("POSSIBLE OPTIMIZATION ERRORS DETECTED: Check the results manually by setting save_models = FALSE.")
   # }
   

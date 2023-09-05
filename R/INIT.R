@@ -129,7 +129,7 @@ INIT <- function(
   n_person <- length(unique(id)) # number of individuals
   n_vars <- length(vars) # number of variables
   
-  # ------ Specify network model using psychonetrics -----
+  # ------ Specify model using psychonetrics -----
   mod <- psychonetrics::gvar(data, 
                              vars = vars,
                              beepvar = beepvar,
@@ -138,7 +138,7 @@ INIT <- function(
                              estimator = estimator,
                              ...)
   
-  # ------ Estimate network model using psychonetrics -----
+  # ------ Estimate model using psychonetrics -----
   
   mod <- mod %>% psychonetrics::runmodel()
   
@@ -168,8 +168,8 @@ INIT <- function(
       delta_AIC <- mod_AIC$AIC - mod_constrained_AIC$AIC
       
       # Results:
-      res <- list(different_network_AIC = mod_AIC$AIC, 
-                  equal_network_AIC = mod_constrained_AIC$AIC, 
+      res <- list(homogeneity_model_AIC = mod_constrained_AIC$AIC,
+                  heterogeneity_model_AIC = mod_AIC$AIC,
                   delta_AIC = delta_AIC)
       
       # Save model: 
@@ -231,8 +231,8 @@ INIT <- function(
       delta_AIC <- mod_AIC$AIC - mod_constrained_AIC$AIC
       
       # Results:
-      res <- list(different_network_AIC = mod_AIC$AIC, 
-                  equal_network_AIC = mod_constrained_AIC$AIC, 
+      res <- list(homogeneity_model_AIC = mod_constrained_AIC$AIC,
+                  heterogeneity_model_AIC = mod_AIC$AIC,
                   delta_AIC = delta_AIC)
       
       # Save model: 
@@ -294,8 +294,8 @@ INIT <- function(
       delta_AIC <- mod_AIC$AIC - mod_constrained_AIC$AIC
       
       # Results:
-      res <- list(different_network_AIC = mod_AIC$AIC, 
-                  equal_network_AIC = mod_constrained_AIC$AIC, 
+      res <- list(homogeneity_model_AIC = mod_constrained_AIC$AIC,
+                  heterogeneity_model_AIC = mod_AIC$AIC,
                   delta_AIC = delta_AIC)
       
       # Save model: 
@@ -371,8 +371,8 @@ INIT <- function(
       delta_BIC <- mod_BIC$BIC - mod_constrained_BIC$BIC
       
       # Results
-      res <- list(different_network_BIC = mod_BIC$BIC, 
-                  equal_network_BIC = mod_constrained_BIC$BIC, 
+      res <- list(homogeneity_model_BIC = mod_constrained_BIC$BIC, 
+                  heterogeneity_model_BIC = mod_BIC$BIC,
                   delta_BIC = delta_BIC)
       
       # Save model: 
@@ -400,16 +400,16 @@ INIT <- function(
           mod_constrained_contemp <- mod_constrained %>% 
             psychonetrics::getmatrix("omega_zeta")
         
-        mod_constrained_temp <- mod_constrained %>% 
-          psychonetrics::getmatrix("beta")
+          mod_constrained_temp <- mod_constrained %>% 
+           psychonetrics::getmatrix("beta")
         
-        # Change names to correspond to idvar:
-        names(mod_constrained_contemp) <- unique(data[[idvar]])
-        names(mod_constrained_temp) <- unique(data[[idvar]])
+          # Change names to correspond to idvar:
+          names(mod_constrained_contemp) <- unique(data[[idvar]])
+          names(mod_constrained_temp) <- unique(data[[idvar]])
         
-        res[["model"]] <- list(
-          contemporaneous = mod_constrained_contemp,
-          temporal = mod_constrained_temp)
+          res[["model"]] <- list(
+            contemporaneous = mod_constrained_contemp,
+            temporal = mod_constrained_temp)
         
       } # End: save_model
       
@@ -434,8 +434,8 @@ INIT <- function(
       delta_BIC <- mod_BIC$BIC - mod_constrained_BIC$BIC
       
       # Results:
-      res <- list(different_network_BIC = mod_BIC$BIC, 
-                  equal_network_BIC = mod_constrained_BIC$BIC, 
+      res <- list(homogeneity_model_BIC = mod_constrained_BIC$BIC,
+                  heterogeneity_model_BIC = mod_BIC$BIC,
                   delta_BIC = delta_BIC)
       
       # Save model: 
@@ -463,16 +463,16 @@ INIT <- function(
           mod_constrained_contemp <- mod_constrained %>% 
             psychonetrics::getmatrix("omega_zeta")
         
-        mod_constrained_temp <- mod_constrained %>% 
-          psychonetrics::getmatrix("beta")
-        
-        # Change names to correspond to idvar:
-        names(mod_constrained_contemp) <- unique(data[[idvar]])
-        names(mod_constrained_temp) <- unique(data[[idvar]])
-        
-        res[["model"]] <- list(
-          contemporaneous = mod_constrained_contemp,
-          temporal = mod_constrained_temp)
+          mod_constrained_temp <- mod_constrained %>% 
+            psychonetrics::getmatrix("beta")
+          
+          # Change names to correspond to idvar:
+          names(mod_constrained_contemp) <- unique(data[[idvar]])
+          names(mod_constrained_temp) <- unique(data[[idvar]])
+          
+          res[["model"]] <- list(
+            contemporaneous = mod_constrained_contemp,
+            temporal = mod_constrained_temp)
         
       } # End: save_model
       
@@ -497,8 +497,8 @@ INIT <- function(
       delta_BIC <- mod_BIC$BIC - mod_constrained_BIC$BIC
       
       # Results:
-      res <- list(different_network_BIC = mod_BIC$BIC, 
-                  equal_network_BIC = mod_constrained_BIC$BIC, 
+      res <- list(homogeneity_model_BIC = mod_constrained_BIC$BIC,
+                  heterogeneity_model_BIC = mod_BIC$BIC, 
                   delta_BIC = delta_BIC)
       
       # Save model: 
@@ -526,16 +526,16 @@ INIT <- function(
           mod_constrained_contemp <- mod_constrained %>% 
             psychonetrics::getmatrix("omega_zeta")
         
-        mod_constrained_temp <- mod_constrained %>% 
-          psychonetrics::getmatrix("beta")
-        
-        # Change names to correspond to idvar:
-        names(mod_constrained_contemp) <- unique(data[[idvar]])
-        names(mod_constrained_temp) <- unique(data[[idvar]])
-        
-        res[["model"]] <- list(
-          contemporaneous = mod_constrained_contemp,
-          temporal = mod_constrained_temp)
+          mod_constrained_temp <- mod_constrained %>% 
+            psychonetrics::getmatrix("beta")
+          
+          # Change names to correspond to idvar:
+          names(mod_constrained_contemp) <- unique(data[[idvar]])
+          names(mod_constrained_temp) <- unique(data[[idvar]])
+          
+          res[["model"]] <- list(
+            contemporaneous = mod_constrained_contemp,
+            temporal = mod_constrained_temp)
         
       } # End: save_model
       
