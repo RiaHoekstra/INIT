@@ -17,9 +17,8 @@ This example shows how to compare idiographic networks using INIT's default argu
 
 ```
 library(INIT)
-
 # Load data of two individuals: 
-load("INIT_data.rda") 
+data <- INIT::data
 
 # Compare networks with default arguments:
 INIT(data = data, idvar = colnames(data)[1], vars = colnames(data)[2:7])
@@ -31,7 +30,7 @@ This example shows how default arguments such as 'estimator', 'network_type', an
 ```
 library(INIT)
 # Load data of two individuals: 
-load("INIT_data.rda") 
+data <- INIT::data 
 
 # Compare networks with default arguments:
 INIT(data = data, idvar = colnames(data)[1],vars = colnames(data)[2:7], estimator = "FIML", network_type = "pruned", homogeneity_test = "temporal", save_models = TRUE)
@@ -43,7 +42,7 @@ INIT makes use of the `psychonetrics` package to estimate idiographic network st
 ```
 library(INIT)
 # Load data of two individuals: 
-load("INIT_data.rda") 
+data <- INIT::data
 
 # Save INIT results in an object:
 res <- INIT(data = data, idvar = colnames(data)[1],vars = colnames(data)[2:7], save_models = TRUE)
