@@ -155,14 +155,14 @@ INIT <- function(
         psychonetrics::runmodel()
       
       # Get model fit indices: 
-      fit_indicies <- psychonetrics::compare(different = mod, 
+      fit_indices <- psychonetrics::compare(different = mod, 
                                              equal = mod_constrained)
       
       # AIC:
-      mod_AIC <- fit_indicies %>% 
+      mod_AIC <- fit_indices %>% 
         filter(model == "different")
       
-      mod_constrained_AIC <- fit_indicies %>% 
+      mod_constrained_AIC <- fit_indices %>% 
         filter(model == "equal")
       
       delta_AIC <- mod_AIC$AIC - mod_constrained_AIC$AIC
@@ -218,14 +218,14 @@ INIT <- function(
         psychonetrics::runmodel()
       
       # Get model fit indices: 
-      fit_indicies <- psychonetrics::compare(different = mod, 
+      fit_indices <- psychonetrics::compare(different = mod, 
                                              equal = mod_constrained)
       
       # AIC:
-      mod_AIC <- fit_indicies %>% 
+      mod_AIC <- fit_indices %>% 
         filter(model == "different")
       
-      mod_constrained_AIC <- fit_indicies %>% 
+      mod_constrained_AIC <- fit_indices %>% 
         filter(model == "equal")
       
       delta_AIC <- mod_AIC$AIC - mod_constrained_AIC$AIC
@@ -281,14 +281,14 @@ INIT <- function(
         psychonetrics::runmodel()
       
       # Get model fit indices: 
-      fit_indicies <- psychonetrics::compare(different = mod, 
+      fit_indices <- psychonetrics::compare(different = mod, 
                                              equal = mod_constrained)
       
       # AIC:
-      mod_AIC <- fit_indicies %>% 
+      mod_AIC <- fit_indices %>% 
         filter(model == "different")
       
-      mod_constrained_AIC <- fit_indicies %>% 
+      mod_constrained_AIC <- fit_indices %>% 
         filter(model == "equal")
       
       delta_AIC <- mod_AIC$AIC - mod_constrained_AIC$AIC
@@ -358,14 +358,14 @@ INIT <- function(
         psychonetrics::runmodel()
       
       # Get fit indices: 
-      fit_indicies <- psychonetrics::compare(different = mod_pruned, 
+      fit_indices <- psychonetrics::compare(different = mod_pruned, 
                                              equal = mod_constrained)
       
       # BIC
-      mod_BIC <- fit_indicies %>% 
+      mod_BIC <- fit_indices %>% 
         filter(model == "different")
       
-      mod_constrained_BIC <- fit_indicies %>% 
+      mod_constrained_BIC <- fit_indices %>% 
         filter(model == "equal")
       
       delta_BIC <- mod_BIC$BIC - mod_constrained_BIC$BIC
@@ -421,14 +421,14 @@ INIT <- function(
         psychonetrics::runmodel()
       
       # Get fit indices: 
-      fit_indicies <- psychonetrics::compare(different = mod_pruned, 
+      fit_indices <- psychonetrics::compare(different = mod_pruned, 
                                              equal = mod_constrained)
       
       # BIC:
-      mod_BIC <- fit_indicies %>% 
+      mod_BIC <- fit_indices %>% 
         filter(model == "different")
       
-      mod_constrained_BIC <- fit_indicies %>% 
+      mod_constrained_BIC <- fit_indices %>% 
         filter(model == "equal")
       
       delta_BIC <- mod_BIC$BIC - mod_constrained_BIC$BIC
@@ -484,14 +484,14 @@ INIT <- function(
         psychonetrics::runmodel()
       
       # Get fit indices: 
-      fit_indicies <- psychonetrics::compare(different = mod_pruned, 
+      fit_indices <- psychonetrics::compare(different = mod_pruned, 
                                              equal = mod_constrained)
       
       # BIC:
-      mod_BIC <- fit_indicies %>% 
+      mod_BIC <- fit_indices %>% 
         filter(model == "different")
       
-      mod_constrained_BIC <- fit_indicies %>% 
+      mod_constrained_BIC <- fit_indices %>% 
         filter(model == "equal")
       
       delta_BIC <- mod_BIC$BIC - mod_constrained_BIC$BIC
