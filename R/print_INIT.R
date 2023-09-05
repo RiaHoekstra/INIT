@@ -52,7 +52,7 @@ print.INIT <- function(x,...){
       "  - homogeneity test:",x$input$homogeneity_test,"\n")
 
   if(x$input$save_models){
-    cat(paste0("\n Estimated networks are stored in ", name,"$model"))
+    cat(paste0("\n Estimated networks are stored in ", name,"$network"))
   }
   
   # Warning?

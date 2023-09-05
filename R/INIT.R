@@ -187,11 +187,11 @@ INIT <- function(
           names(mod_contemp) <- unique(data[[idvar]])
           names(mod_temp) <- unique(data[[idvar]])
           
-          res[["model"]] <- list(
+          res[["network"]] <- list(
             contemporaneous = mod_contemp,
             temporal = mod_temp)
           
-        } else # if mod_AIC$AIC > mod_constrained_AIC$AIC
+        } else { # if mod_AIC$AIC > mod_constrained_AIC$AIC
           
           # get matrix from psychonetrics:
           mod_constrained_contemp <- mod_constrained %>% 
@@ -204,10 +204,10 @@ INIT <- function(
          names(mod_constrained_contemp) <- unique(data[[idvar]])
          names(mod_constrained_temp) <- unique(data[[idvar]])
         
-         res[["model"]] <- list(
+         res[["network"]] <- list(
            contemporaneous = mod_constrained_contemp,
            temporal = mod_constrained_temp)
-        
+        }
       } # End: save_model
       
     } else if(homogeneity_test == "contemporaneous") {
@@ -250,11 +250,11 @@ INIT <- function(
           names(mod_contemp) <- unique(data[[idvar]])
           names(mod_temp) <- unique(data[[idvar]])
           
-          res[["model"]] <- list(
+          res[["network"]] <- list(
             contemporaneous = mod_contemp,
             temporal = mod_temp)
           
-        } else # if mod_AIC$AIC > mod_constrained_AIC$AIC
+        } else { # if mod_AIC$AIC > mod_constrained_AIC$AIC
           
           # get matrix from psychonetrics:
           mod_constrained_contemp <- mod_constrained %>% 
@@ -267,10 +267,10 @@ INIT <- function(
          names(mod_constrained_contemp) <- unique(data[[idvar]])
          names(mod_constrained_temp) <- unique(data[[idvar]])
         
-         res[["model"]] <- list(
+         res[["network"]] <- list(
            contemporaneous = mod_constrained_contemp,
            temporal = mod_constrained_temp)
-        
+        }
       } # End: save_model
       
     } else { # if homogeneity_test == "temporal"
@@ -313,11 +313,11 @@ INIT <- function(
           names(mod_contemp) <- unique(data[[idvar]])
           names(mod_temp) <- unique(data[[idvar]])
           
-          res[["model"]] <- list(
+          res[["network"]] <- list(
             contemporaneous = mod_contemp,
             temporal = mod_temp)
           
-        } else # if mod_AIC$AIC > mod_constrained_AIC$AIC
+        } else { # if mod_AIC$AIC > mod_constrained_AIC$AIC
           
           # get matrix from psychonetrics:
           mod_constrained_contemp <- mod_constrained %>% 
@@ -330,10 +330,10 @@ INIT <- function(
           names(mod_constrained_contemp) <- unique(data[[idvar]])
           names(mod_constrained_temp) <- unique(data[[idvar]])
         
-          res[["model"]] <- list(
+          res[["network"]] <- list(
             contemporaneous = mod_constrained_contemp,
             temporal = mod_constrained_temp)
-        
+        } 
       } # End: save_model
       
     } # End: homogeneity_test
@@ -390,11 +390,11 @@ INIT <- function(
           names(mod_contemp) <- unique(data[[idvar]])
           names(mod_temp) <- unique(data[[idvar]])
           
-          res[["model"]] <- list(
+          res[["network"]] <- list(
             contemporaneous = mod_contemp,
             temporal = mod_temp)
           
-        } else # if mod_BIC$BIC > mod_constrained_BIC$BIC
+        } else { # if mod_BIC$BIC > mod_constrained_BIC$BIC
           
           # get matrix from psychonetrics:
           mod_constrained_contemp <- mod_constrained %>% 
@@ -407,10 +407,10 @@ INIT <- function(
           names(mod_constrained_contemp) <- unique(data[[idvar]])
           names(mod_constrained_temp) <- unique(data[[idvar]])
         
-          res[["model"]] <- list(
+          res[["network"]] <- list(
             contemporaneous = mod_constrained_contemp,
             temporal = mod_constrained_temp)
-        
+        }
       } # End: save_model
       
     } else if(homogeneity_test == "contemporaneous"){
@@ -453,11 +453,11 @@ INIT <- function(
           names(mod_contemp) <- unique(data[[idvar]])
           names(mod_temp) <- unique(data[[idvar]])
           
-          res[["model"]] <- list(
+          res[["network"]] <- list(
             contemporaneous = mod_contemp,
             temporal = mod_temp)
           
-        } else # if mod_BIC$BIC > mod_constrained_BIC$BIC
+        } else { # if mod_BIC$BIC > mod_constrained_BIC$BIC
           
           # get matrix from psychonetrics:
           mod_constrained_contemp <- mod_constrained %>% 
@@ -470,10 +470,10 @@ INIT <- function(
           names(mod_constrained_contemp) <- unique(data[[idvar]])
           names(mod_constrained_temp) <- unique(data[[idvar]])
           
-          res[["model"]] <- list(
+          res[["network"]] <- list(
             contemporaneous = mod_constrained_contemp,
             temporal = mod_constrained_temp)
-        
+        }
       } # End: save_model
       
     } else { # if homogeneity_test == "temporal"
@@ -516,11 +516,11 @@ INIT <- function(
           names(mod_contemp) <- unique(data[[idvar]])
           names(mod_temp) <- unique(data[[idvar]])
           
-          res[["model"]] <- list(
+          res[["network"]] <- list(
             contemporaneous = mod_contemp,
             temporal = mod_temp)
           
-        } else # if mod_BIC$BIC > mod_constrained_BIC$BIC
+        } else { # if mod_BIC$BIC > mod_constrained_BIC$BIC
           
           # get matrix from psychonetrics:
           mod_constrained_contemp <- mod_constrained %>% 
@@ -533,10 +533,10 @@ INIT <- function(
           names(mod_constrained_contemp) <- unique(data[[idvar]])
           names(mod_constrained_temp) <- unique(data[[idvar]])
           
-          res[["model"]] <- list(
+          res[["network"]] <- list(
             contemporaneous = mod_constrained_contemp,
             temporal = mod_constrained_temp)
-        
+        }
       } # End: save_model
       
     } # End: homogeneity_test 
