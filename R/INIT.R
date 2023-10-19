@@ -360,7 +360,7 @@ INIT <- function(
         psychonetrics::runmodel()
       
       # Get fit indices: 
-      fit_indices <- psychonetrics::compare(different = mod_pruned, 
+      fit_indices <- psychonetrics::compare(different = mod_union, 
                                              equal = mod_constrained)
       
       # BIC
@@ -423,7 +423,7 @@ INIT <- function(
         psychonetrics::runmodel()
       
       # Get fit indices: 
-      fit_indices <- psychonetrics::compare(different = mod_pruned, 
+      fit_indices <- psychonetrics::compare(different = mod_union, 
                                              equal = mod_constrained)
       
       # BIC:
@@ -486,7 +486,7 @@ INIT <- function(
         psychonetrics::runmodel()
       
       # Get fit indices: 
-      fit_indices <- psychonetrics::compare(different = mod_pruned, 
+      fit_indices <- psychonetrics::compare(different = mod_union, 
                                              equal = mod_constrained)
       
       # BIC:

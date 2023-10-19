@@ -32,7 +32,7 @@ library(INIT)
 # Load data of two individuals: 
 data <- INIT::data 
 
-# Compare networks with default arguments:
+# Compare networks:
 INIT(data = data, idvar = colnames(data)[1],vars = colnames(data)[2:7], estimator = "FIML", network_type = "pruned", homogeneity_test = "temporal", save_models = TRUE)
 ```
 
